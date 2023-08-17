@@ -1,0 +1,86 @@
+.favorite-list{
+    display:flex;
+    flex-direction: column;
+    gap:8px;
+    height:100%;
+
+    font-size:24px;
+
+    overflow-y: auto;
+    scrollbar-gutter: stable both-edges;
+
+    //item
+    &__item{
+        width:48px;
+        flex-shrink: 0;
+        height:48px;
+
+        transition: all 0.3s ease-in-out;
+        .sidebar--open &{
+            width:184px;
+        
+        }
+
+        display:flex;
+        gap:8px;
+        padding:12px;
+        align-items: center;
+
+        background:var(--foreground-color);
+        border-radius: 12px;
+
+        animation: 0.2s ease-in fadeIn;
+    }
+    &__item-text{
+
+        display:none;
+        font-size:18px;
+
+        //доступ до модифікатора --open в sidebar-а , незнаю як по іншому зробити
+        .sidebar--open &{
+            display:inline;
+            animation: 0.2s ease-in textSizeIn;
+        }
+
+        cursor:pointer;
+        pointer-events: none;
+        user-select:none;
+        
+    }
+    //scrollbar
+    & {
+        scrollbar-width: auto;
+        scrollbar-color: var(--bg-color) transparent;
+    }
+    &::-webkit-scrollbar {
+        width: 8px;
+    }
+    &::-webkit-scrollbar-track {
+        background: transparent;
+    }
+    &::-webkit-scrollbar-thumb {
+        background-color: var(--bg-color);
+        border-radius: 10px;
+        border: 2px solid transparent;
+        background-clip: padding-box;
+
+    }
+}
+@keyframes fadeIn {
+    0%{
+        opacity: 0;
+    }
+    100%{
+        opacity: 1;
+    }
+}
+@keyframes textSizeIn {
+    0%{
+        opacity: 0;
+        font-size:0px;
+    }
+    100%{
+        opacity: 1;
+        font-size:16px;
+    }
+}
