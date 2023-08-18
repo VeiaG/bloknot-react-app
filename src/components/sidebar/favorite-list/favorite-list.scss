@@ -8,12 +8,15 @@
 
     overflow-y: auto;
     scrollbar-gutter: stable both-edges;
+    scroll-snap-type: y mandatory;
 
     //item
     &__item{
         width:48px;
         flex-shrink: 0;
         height:48px;
+
+        scroll-snap-align: start;
 
         transition: all 0.3s ease-in-out;
         .sidebar--open &{
@@ -49,8 +52,8 @@
     }
     //scrollbar
     & {
-        scrollbar-width: auto;
-        scrollbar-color: var(--bg-color) transparent;
+        scrollbar-width: thin;
+        scrollbar-color: var(--scrollbar-color) transparent;
     }
     &::-webkit-scrollbar {
         width: 8px;
@@ -59,7 +62,7 @@
         background: transparent;
     }
     &::-webkit-scrollbar-thumb {
-        background-color: var(--bg-color);
+        background-color: var(--scrollbar-color);
         border-radius: 10px;
         border: 2px solid transparent;
         background-clip: padding-box;

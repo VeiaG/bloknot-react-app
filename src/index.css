@@ -5,13 +5,17 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+
   --text-color: #fff;
   --bg-color: #1F1F1F;
   --sidebar-color:#333;
   --foreground-color:#3E3E3E;
+  --scrollbar-color:#464646;
+
   background: var(--bg-color);
   color:var(--text-color);
   font-family: 'Inter', sans-serif;
+  overflow: hidden;
 }
 
 code {

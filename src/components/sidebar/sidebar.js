@@ -1,6 +1,9 @@
-import React, { Component } from "react";
+import React, { useState } from "react";
 import './sidebar.scss'
 import FavoriteList from "./favorite-list/favorite-list";
+import { useDispatch, useSelector } from "react-redux";
+import list from '../icon-name-list/icon-name-list'
+import { book_add,book_remove} from '../../reducers/dataSlice'
 
 const getRandomColor = ()=>{
     return Math.floor(Math.random()*16777215).toString(16);
@@ -17,53 +20,55 @@ function makeid(length) {
     return result;
 }
 
-export default class Sidebar extends Component {
-    state={
-        data : [],
-        isOpened : false
+const getRandomIcon = ()=>{
+    return list[Math.floor(Math.random()*list.length)];
+}
+
+ const Sidebar =()=>{
+    const [isOpened , setOpened] = useState();
+
+    const dispatch = useDispatch()
+    const data = useSelector(state=>state.data.value);
+
+    const addTest=()=>{
+        const newBook={
+                id:crypto.randomUUID(),
+                color:`#${getRandomColor()}`, 
+                iconName:getRandomIcon(),
+                text:makeid(10),
+                description:makeid(20)
+        }
+        dispatch(book_add(newBook));
     }
-    addTest=()=>{
-        this.setState({
-                data: [ ...this.state.data ,
-                    {
-                        color:`#${getRandomColor()}`, 
-                        iconName:'c-circle-fill',
-                        text:makeid(10)
-                    }
-                ]
-            })
+    const removeTest=()=>{
+        dispatch(book_remove());
     }
-    removeTest=()=>{
-        this.setState({
-                data:[...this.state.data].slice(0,-1)
-        })
+    const toggleOpened= ()=>{
+        setOpened(!isOpened);
     }
-    toggleOpen = ()=>{
-        this.setState({
-            isOpened: !this.state.isOpened
-        })
-    }
-    render(){
-        return <div className={`sidebar ${this.state.isOpened ?'sidebar--open': ''}`}>
+
+    return (
+        <div className={`sidebar ${isOpened ?'sidebar--open': ''}`}>
             
-            <div onClick={this.toggleOpen} className="sidebar__menu sidebar__icon">
+            <div onClick={toggleOpened} className="sidebar__menu sidebar__icon">
                 <i className="bi bi-list"></i>
                 <div className="sidebar__opened-text">Блокнот</div>
             </div>
 
-            <div onClick={this.addTest} className="sidebar__logo sidebar__icon">
+            <div onClick={addTest} className="sidebar__logo sidebar__icon">
                 <i className="bi bi-file-earmark-plus"></i>
                 <div className="sidebar__opened-text">Створити</div>
             </div>
 
             <div className="sidebar__list">
-                <FavoriteList isOpened={this.state.isOpened} data={this.state.data}/>
+                <FavoriteList data={data}/>
             </div>
             
-            <div onClick={this.removeTest} className="sidebar__settings sidebar__icon">
+            <div onClick={removeTest} className="sidebar__settings sidebar__icon">
                 <i className="bi bi-gear"></i>
                 <div className="sidebar__opened-text">Налаштування</div>
             </div>
         </div>
-    }
+    )
 }
+export default Sidebar;
