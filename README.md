@@ -5,8 +5,6 @@
 
 Технології: 
 
-- React (очевидно)
+- React 
 - Redux (react-redux)
-- BrowserRouter 
 
-а далі шось потім колись придумаю ))

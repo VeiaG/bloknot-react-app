@@ -1,52 +1,19 @@
 import React, { useState } from "react";
 import './sidebar.scss'
 import FavoriteList from "./favorite-list/favorite-list";
-import { useDispatch, useSelector } from "react-redux";
-import list from '../icon-name-list/icon-name-list'
-import { book_add,book_remove} from '../../reducers/dataSlice'
+import { useSelector } from "react-redux";
+
 import AddBook from "../modals/add-book";
 
-const getRandomColor = ()=>{
-    return Math.floor(Math.random()*16777215).toString(16);
-}
-function makeid(length) {
-    let result = '';
-    const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
-    const charactersLength = characters.length;
-    let counter = 0;
-    while (counter < length) {
-      result += characters.charAt(Math.floor(Math.random() * charactersLength));
-      counter += 1;
-    }
-    return result;
-}
 
-const getRandomIcon = ()=>{
-    return list[Math.floor(Math.random()*list.length)];
-}
 
  const Sidebar =()=>{
     const [isOpened , setOpened] = useState(false);
     const [addModalVisibility, setAddModalVisibility] = useState(false);
 
-    const dispatch = useDispatch()
+    
     const data = useSelector(state=>state.data.value);
 
-    const addTest=()=>{
-        setAddModalVisibility(true);
-        const newBook={
-                id:crypto.randomUUID(),
-                color:`#${getRandomColor()}`, 
-                iconName:getRandomIcon(),
-                text:`${makeid(100)}`,
-                description:`${makeid(100)}`,
-                favorite:false,
-        }
-        dispatch(book_add(newBook));
-    }
-    const removeTest=()=>{
-        dispatch(book_remove());
-    }
     const toggleOpened= ()=>{
         setOpened(!isOpened);
     }
@@ -62,7 +29,7 @@ const getRandomIcon = ()=>{
                 <div className="sidebar__opened-text">Блокнот</div>
             </div>
 
-            <div onClick={addTest} className="sidebar__logo sidebar__icon">
+            <div onClick={()=>setAddModalVisibility(true)} className="sidebar__logo sidebar__icon">
                 <i className="bi bi-file-earmark-plus"></i>
                 <div className="sidebar__opened-text">Створити</div>
             </div>
@@ -71,10 +38,11 @@ const getRandomIcon = ()=>{
                 <FavoriteList data={data}/>
             </div>
             
-            <div onClick={removeTest} className="sidebar__settings sidebar__icon">
+            <div onClick={()=>{}} className="sidebar__settings sidebar__icon">
                 <i className="bi bi-gear"></i>
                 <div className="sidebar__opened-text">Налаштування</div>
             </div>
+            
         </div>
     )
 }

@@ -1,3 +1,4 @@
+@import '../../../styles/mixins.scss';
 .main-page{
     flex-grow:1;
     position: relative;
@@ -31,22 +32,7 @@
     &__search-input{
         flex-grow: 1;
         height:100%;
-        input{
-            width:100%;
-            background:var(--sidebar-color);
-            outline: none;
-            height:100%;
-            border:none;
-
-            padding:4px 48px;
-
-            color:var(--text-color);
-        }
-        i{
-            position: absolute;
-            top:4px;
-            left:12px;
-        }
+        @include input-text; 
     }
     &__btn{
         display: flex;
@@ -76,37 +62,28 @@
         overflow-y: auto;
         scrollbar-gutter: stable ;
 
-        //scrollbar
-        & {
-            scrollbar-width: thin;
-            scrollbar-color: var(--scrollbar-color) transparent;
-        }
-        &::-webkit-scrollbar {
-            width: 16px;
-        }
-        &::-webkit-scrollbar-track {
-            background: transparent;
-        }
-        &::-webkit-scrollbar-thumb {
-            background-color: var(--scrollbar-color);
-            border-radius: 10px;
-            border: 4px solid transparent;
-            background-clip: padding-box;
+        @include custom-scrollbar(16px);
+    }
 
-        }
+    &__text-wrapper{
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
     }
 
     &__list{
         display:grid;
+        justify-content: center;
         gap:32px;
         transition: all 0.3s ease-in-out;
-        @media (min-width: 600px) {
+        @media (min-width: 735px) {
             grid-template-columns: repeat(2, 1fr);
         }
-        @media (min-width: 900px) {
+        @media (min-width: 1060px) {
             grid-template-columns: repeat(3, 1fr);
         }
-        @media (min-width: 1200px) {
+        @media (min-width: 1400px) {
             grid-template-columns: repeat(4, 1fr);
         }
         &-columns{
@@ -125,9 +102,9 @@
 
         position: relative;
 
-        min-width: 0px;
-        min-height:400px;
-        max-height:400px;
+        min-width: 250px;
+        max-width: 400px;
+        height: 400px;
         padding:256px 16px 0px;
 
         display:flex;
@@ -139,6 +116,7 @@
         .main-page__list-columns &{
             min-height:128px;
             max-height:128px;
+            max-width: 100%;
             padding:32px;
             flex-direction: row;
             gap:32px;

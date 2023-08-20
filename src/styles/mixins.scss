@@ -1,0 +1,49 @@
+@mixin center-content{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+@mixin input-text($inputType : input){
+    position: relative;
+    height:48px;
+    font-size:24px;
+    #{$inputType}{
+        width:100%;
+        background:var(--sidebar-color);
+        outline: none;
+        height:100%;
+        border:none;
+
+        padding:4px 48px;
+
+        color:var(--text-color);
+
+        
+    }
+    i{
+        position: absolute;
+        top:6px;
+        left:12px;
+    }
+}
+
+@mixin custom-scrollbar($width){
+    //scrollbar
+    & {
+        scrollbar-width: thin;
+        scrollbar-color: var(--scrollbar-color) transparent;
+    }
+    &::-webkit-scrollbar {
+        width: $width;
+    }
+    &::-webkit-scrollbar-track {
+        background: transparent;
+    }
+    &::-webkit-scrollbar-thumb {
+        background-color: var(--scrollbar-color);
+        border-radius: 10px;
+        border: $width/4 solid transparent;
+        background-clip: padding-box;
+
+    }
+}

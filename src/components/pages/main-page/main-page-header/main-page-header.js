@@ -4,7 +4,7 @@ const MainPageHeader = ({toggleColumns,onSearch})=>{
         <div className="main-page__header">
 
             <div className="main-page__search-input">
-            <i className="bi bi-search"></i>
+                <i className="bi bi-search"></i>
                 <input onChange={(e)=>{
                     onSearch(e.target.value);
                 }} type="text" name="search" id="" placeholder="Пошук" autoComplete="off"/>

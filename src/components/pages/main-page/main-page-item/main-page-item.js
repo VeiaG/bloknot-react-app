@@ -1,10 +1,10 @@
 import React from "react";
 import {useDispatch} from 'react-redux';
 import {book_toggle_favorite} from '../../../../reducers/dataSlice';
-const MainPageItem = ({color,text,description,iconName,favorite,id})=>{
+const MainPageItem = ({color,text,description,iconName,favorite,id,disableToggle = false})=>{
     const dispatch = useDispatch();
     const toggleFavorite= ()=>{
-        dispatch(book_toggle_favorite(id));
+        if(! disableToggle) dispatch(book_toggle_favorite(id));
     }
     return <div className="main-page__item">
         <i className={`main-page__item-icon bi bi-${iconName}`} style={{color}}></i>
