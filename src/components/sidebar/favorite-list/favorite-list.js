@@ -3,13 +3,10 @@ import './favorite-list.scss'
 import FavoriteItem from "../favorite-item/favorite-item";
 
 const FavoriteList =({data}) => {
+    const dataFavorite = data.filter(item => item.favorite)
     return <div className="favorite-list">
-        {data.map(item=>{
-            return (<FavoriteItem 
-                    text={item.text} 
-                    key={item.id} 
-                    color={item.color} 
-                    iconName={item.iconName}/>)
+        {dataFavorite.map(item=>{
+            return (<FavoriteItem key={item.id} {...item}/>)
         })}
     </div>
 }

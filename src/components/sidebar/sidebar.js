@@ -4,6 +4,7 @@ import FavoriteList from "./favorite-list/favorite-list";
 import { useDispatch, useSelector } from "react-redux";
 import list from '../icon-name-list/icon-name-list'
 import { book_add,book_remove} from '../../reducers/dataSlice'
+import AddBook from "../modals/add-book";
 
 const getRandomColor = ()=>{
     return Math.floor(Math.random()*16777215).toString(16);
@@ -25,18 +26,21 @@ const getRandomIcon = ()=>{
 }
 
  const Sidebar =()=>{
-    const [isOpened , setOpened] = useState();
+    const [isOpened , setOpened] = useState(false);
+    const [addModalVisibility, setAddModalVisibility] = useState(false);
 
     const dispatch = useDispatch()
     const data = useSelector(state=>state.data.value);
 
     const addTest=()=>{
+        setAddModalVisibility(true);
         const newBook={
                 id:crypto.randomUUID(),
                 color:`#${getRandomColor()}`, 
                 iconName:getRandomIcon(),
-                text:makeid(10),
-                description:makeid(20)
+                text:`${makeid(100)}`,
+                description:`${makeid(100)}`,
+                favorite:false,
         }
         dispatch(book_add(newBook));
     }
@@ -49,7 +53,10 @@ const getRandomIcon = ()=>{
 
     return (
         <div className={`sidebar ${isOpened ?'sidebar--open': ''}`}>
-            
+            <AddBook 
+                closeModal={()=>{setAddModalVisibility(false)}}
+                isActive={addModalVisibility}/> 
+                
             <div onClick={toggleOpened} className="sidebar__menu sidebar__icon">
                 <i className="bi bi-list"></i>
                 <div className="sidebar__opened-text">Блокнот</div>

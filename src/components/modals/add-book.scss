@@ -1,0 +1,40 @@
+.add-book{
+    top:0;
+    left:0;
+    position: absolute;
+    width:100vw;
+    height:100vh;
+
+    background:rgba(255, 255, 255, 0.15);
+    backdrop-filter: blur(15px);
+    
+    display:flex;
+    justify-content: center;
+    align-items: center;
+
+    animation: 0.2s ease-in-out fadeIn;
+
+    &__content{
+        position: relative;
+        outline:none;
+        //border:1px solid red;
+
+        background:var(--bg-color);
+
+        width:70%;
+        height:80%;
+        @media (max-width: 900px) {
+            width:95%;
+            height:95%;
+        }
+
+        padding: 16px;
+    }
+    
+    &__close-btn{
+        position: absolute;
+        top:4px;
+        right:16px;
+        font-size:48px;
+    }
+}
