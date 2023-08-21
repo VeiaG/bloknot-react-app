@@ -41,10 +41,10 @@
 
         display:none;
         font-size:18px;
-
+        @include lineOverflow;
         //доступ до модифікатора --open в sidebar-а , незнаю як по іншому зробити
         .sidebar--open &{
-            display:inline;
+            display:-webkit-box;
             animation: 0.2s ease-in textSizeIn;
         }
 

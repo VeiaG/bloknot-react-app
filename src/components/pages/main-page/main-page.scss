@@ -70,6 +70,10 @@
         flex-direction: column;
         justify-content: center;
         align-items: center;
+        .main-page__list-columns &{
+            align-items: start;
+            
+        }
     }
 
     &__list{
@@ -120,6 +124,7 @@
             padding:32px;
             flex-direction: row;
             gap:32px;
+            
         }
     }
     &__item-icon{
@@ -136,30 +141,14 @@
         font-size:32px;
         font-weight: bold;
 
-        overflow-wrap: break-word;
-        word-break: break-all;
-        
-        text-overflow: ellipsis;
-        display: -webkit-box;
-        overflow: hidden;
-        
-        -webkit-line-clamp: 1;
-        -webkit-box-orient: vertical;
+        @include lineOverflow;
 
     }
     &__item-description{
         font-size:24px;
         font-weight: 300;
 
-        overflow-wrap: break-word;
-        word-break: break-all;
-
-        text-overflow: ellipsis;
-        display: -webkit-box;
-        overflow: hidden;
-        
-        -webkit-line-clamp: 2;
-        -webkit-box-orient: vertical;
+        @include lineOverflow(2);
 
         //Columns css
         .main-page__list-columns &{

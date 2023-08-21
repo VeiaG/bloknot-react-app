@@ -34,9 +34,10 @@ const IconSettingsPage = ({iconName , onIconChange ,color})=>{
             <div className="icon-settings__list">
                 {search(list,searchValue).map(item=>{
                     return(
-                        <div onClick={()=>{
-                            onIconChange(item.name);
-                        }} key={item.name} className="icon-settings__list-item">
+                        <div onClick={()=>onIconChange(item.name)} 
+                            key={item.name} 
+                            className={`icon-settings__list-item ${iconName===item.name ? 'icon-settings__list-item-selected' :''}`}>
+                            
                             <i style={{color}}className={`bi bi-${item.name}`}></i>
                             <span>{item.name}</span>
                         </div>

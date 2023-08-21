@@ -45,7 +45,7 @@
         cursor:pointer;
         background:var(--foreground-color);
         min-height: 144px;
-        transition: all 0.3s ease-in-out;
+       
         span{
             cursor:pointer;
             user-select:none;
@@ -55,6 +55,9 @@
 
         &:hover{
             background:var(--sidebar-color);
+        }
+        &-selected{
+            border:2px solid var(--text-color);
         }
     }
 }

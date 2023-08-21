@@ -1,4 +1,4 @@
-
+@import '../../styles/mixins.scss';
 .sidebar{
     width:64px;
     height:100vh;
@@ -26,7 +26,7 @@
 
         transition: all 0.3s ease-in-out;
         &:hover{
-            color:rgb(130, 255, 121);
+            color:var(--hover-color);
         }
         
 
@@ -41,9 +41,9 @@
     &__opened-text{
         display:none;
         font-size:18px;
-
+        
         .sidebar--open &{
-            display:inline;
+            display: inline;
             animation: 0.2s ease-in textSizeIn;
         }
 

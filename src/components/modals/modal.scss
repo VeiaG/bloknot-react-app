@@ -1,7 +1,5 @@
 @import '../../styles/mixins.scss';
-.add-book{
-    
-
+.modal{
     top:0;
     left:0;
     position: absolute;
@@ -13,11 +11,16 @@
     
     @include center-content;
     
+    
     animation: 0.2s ease-in-out fadeIn;
-
+    
     &__content{
         position: relative;
         outline: none;
+
+        @include center-content;
+        flex-direction: column;
+        gap:24px;
 
         background:var(--bg-color);
 
@@ -30,7 +33,11 @@
                 display: none;
             }
         }
-
+        //confirm modal size
+        .modal--confirm &{
+            width:512px;
+            height:224px;
+        }
         
     }
     
@@ -78,7 +85,9 @@
         position:absolute;
         top: 16px;
     }
-
+    &__text{
+        font-size:32px; 
+    }
 
     $btnPaddingBottom:24px;
     $btnPaddingInline:48px;
@@ -91,6 +100,13 @@
         position: absolute;
         bottom:$btnPaddingBottom;
         left:$btnPaddingInline;
+    }
+
+    &__button-group{
+        width:100%;
+        display: flex;
+        justify-content: space-between;
+        padding-inline:32px;
     }
 }
 .knob{
@@ -105,7 +121,22 @@
         background:var(--text-color);
     }
 }
-
+.color-picker{
+    width:100%;
+    height:auto;
+    .rcp-root{
+        --rcp-background-color:var(--bg-color);
+        --rcp-field-input-color: var(--text-color);
+        --rcp-field-input-border-color: var(--foreground-color);
+        --rcp-field-label-color: var(--text-color);
+    }
+    .rcp-field-input{
+        border-radius: 0;
+    }
+    .rcp-saturation{
+        border-radius: 0;
+    }
+}
 .text-settings{
     width:100%;
     max-height:400px;
@@ -157,6 +188,7 @@
 
     &-secondary{
         background:transparent;
+        border:3px solid var(--foreground-color);
     }
 
     &-disabled{
@@ -166,21 +198,15 @@
             background:transparent;
         }
     }
+    //тільки зараз згадав що модифікатори через два дефіса
+    &--danger{
+        
+        
+        &:hover{
+            color:var(--danger-color);
+            background:var(--danger-bg);
+        }
+    }
 }
 
-.color-picker{
-    width:100%;
-    height:auto;
-    .rcp-root{
-        --rcp-background-color:var(--bg-color);
-        --rcp-field-input-color: var(--text-color);
-        --rcp-field-input-border-color: var(--foreground-color);
-        --rcp-field-label-color: var(--text-color);
-    }
-    .rcp-field-input{
-        border-radius: 0;
-    }
-    .rcp-saturation{
-        border-radius: 0;
-    }
-}
+
