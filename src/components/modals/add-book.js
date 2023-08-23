@@ -66,7 +66,7 @@ const AddBook = ({isActive , closeModal  ,isEdit =false, editId=null})=>{
         if(isEdit){
             const editBook = data.find(item => item.id===editId);
             if(editBook){
-                setBook(editBook)
+                setBook({...editBook})
                 setValid(true);
             }
             
@@ -78,7 +78,7 @@ const AddBook = ({isActive , closeModal  ,isEdit =false, editId=null})=>{
                 iconName:'bookmarks-fill',
                 text:'',
                 description:'',
-                favorite:false,
+                favorite:false
             })
             setValid(false);
         }

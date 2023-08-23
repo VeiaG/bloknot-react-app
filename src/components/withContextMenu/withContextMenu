@@ -1,0 +1,19 @@
+import React, {useState} from "react";
+
+//мені важко придумати як це красиво реалізувати :
+const withContextMenu = () => (Wrapped) => {
+    return (props)=>{
+        const [contextItem , setContextItem] = useState(false);
+        return (
+            <>
+            
+                {
+                    
+                
+                }
+            </>
+        )
+    }
+};
+
+export default withContextMenu;

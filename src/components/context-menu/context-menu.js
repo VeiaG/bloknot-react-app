@@ -1,9 +1,9 @@
 import React from "react";
-import { useContextMenu, Menu, Item, Separator } from "react-contexify";
+import { Menu, Item, Separator } from "react-contexify";
 
-const ContextMenu = ({id , items , handleItemClick})=>{
+const ContextMenu = ({className,id , items , handleItemClick , MenuReference = undefined})=>{
 
-    return  <Menu id={id}>
+    return  <Menu className={className} ref={MenuReference} id={id}>
                 {items.map(item=>{
                     switch(item.type){
                         case 'ITEM':
@@ -12,9 +12,12 @@ const ContextMenu = ({id , items , handleItemClick})=>{
                                     closeOnClick={item.closeOnClick}
                                     key={item.data.id} 
                                     id={item.data.id} 
-                                    onClick={handleItemClick}>
+                                    onClick={handleItemClick}
+                                    disabled={item.data.disabled}
+                                    data={item.value}>
                                     {item.data.icon}
                                     {item.data.text}
+                                    
                                     
                                 </Item>
                             )

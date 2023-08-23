@@ -1,8 +1,10 @@
 import React, {useState} from "react";
 import MainPageItem from "../main-page-item/main-page-item";
+
 import { useContextMenu} from "react-contexify";
 import "react-contexify/dist/ReactContexify.css";
 import ContextMenu from "../../../context-menu/context-menu";
+
 import ConfirmModal from "../../../modals/confirm-modal";
 import { useDispatch } from "react-redux";
 import { book_remove } from "../../../../reducers/dataSlice";
@@ -44,8 +46,8 @@ const MainPageList = ({isColumns,data})=>{
     }
 
 
-    //ContextMenu hadler 
-    function handleItemClick({ id, props, data, triggerEvent }) {
+    //ContextMenu handler 
+    function handleItemClick({ id}) {
 
         switch (id) {
             case 'favorite':
@@ -58,6 +60,9 @@ const MainPageList = ({isColumns,data})=>{
             case 'edit':
                 setAddModalVisibility(true);
                 break;
+            case 'info':
+                console.log(data.find(item => item.id === contextItem.id));
+            break;
             default:
                 console.log('click '+id)
 
