@@ -22,7 +22,6 @@ const MainPage = ()=>{
         });
       }
     const filter = (items)=>{
-        console.log(items);
         switch(filterId){
             //від А до Я
             case 0 :

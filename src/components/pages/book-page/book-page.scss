@@ -1,0 +1,68 @@
+@import '../../../styles/mixins.scss';
+.MDEditor{
+    --accentBase: var(--hover-color);
+    --accentBgSubtle: var(--hover-color);
+    --accentBg: var(--hover-color);
+    --accentBgHover: var(--hover-color);
+    --accentBgActive: var(--bg-color);
+    --accentLine: var(--bg-color);
+    --accentBorder: var(--bg-color);
+    --accentBorderHover: var(--bg-color);
+    --accentSolid: var(--bg-color);
+    --accentSolidHover: var(--bg-color);
+    --accentText: var(--bg-color);
+    --accentTextContrast: var(--bg-color);
+
+    --baseBase: var(--editor-bg);
+    --baseBgSubtle: var(--foreground-color);
+    --baseBg:var(--editor-bg);
+    --baseBgHover: var(--hover-bg);
+    --baseBgActive: var(--mauve5);
+    --baseLine: var(--editor-bg);
+    --baseBorder: var(--editor-bg);
+    --baseBorderHover: var(--bg-color);
+    --baseSolid: var(--editor-bg);
+    --baseSolidHover: var(--editor-bg);
+    --baseText: var(--text-color);
+    --baseTextContrast: var(--text-color);
+
+    --radius-medium:0px;
+    [role="toolbar"] {
+        font-size:32px;
+    }
+    blockquote{
+        margin: 1rem 2rem;
+    }
+}
+.book-page{
+    flex-grow:1;
+    position: relative;
+    
+    display:flex;
+    &__editor{
+        overflow-y: auto;
+        scrollbar-gutter: stable ;
+        @include custom-scrollbar(16px);
+        background : var(--editor-bg);
+        
+        flex-grow:1;
+        
+    }
+    //sidebar
+    &__sidebar{
+        flex-shrink: 0;
+        width:25%;
+        background:var(--bg-color);
+        display: flex;
+        flex-direction: column;
+        &-header{
+            padding:8px 16px;
+            @include lineOverflow;
+            @include center-content;
+            justify-content: space-between;
+            font-size:32px;
+            border-bottom:2px solid var(--border-color);
+            border-right:2px solid var(--border-color);
+        }
+    }
+}

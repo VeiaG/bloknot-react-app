@@ -1,9 +1,11 @@
 import React, { useState } from "react";
 import './sidebar.scss'
 import FavoriteList from "./favorite-list/favorite-list";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { page_set } from "../../reducers/pageSlice";
 
 import AddBook from "../modals/add-book";
+
 
 
 
@@ -11,7 +13,10 @@ import AddBook from "../modals/add-book";
     const [isOpened , setOpened] = useState(false);
     const [addModalVisibility, setAddModalVisibility] = useState(false);
 
-    
+    const dispatch = useDispatch();
+
+    const page = useSelector(state=> state.page.value.page);
+
     const data = useSelector(state=>state.data.value);
 
     const toggleOpened= ()=>{
@@ -29,9 +34,17 @@ import AddBook from "../modals/add-book";
                 <div className="sidebar__opened-text">Блокнот</div>
             </div>
 
-            <div onClick={()=>setAddModalVisibility(true)} className="sidebar__logo sidebar__icon">
-                <i className="bi bi-file-earmark-plus"></i>
-                <div className="sidebar__opened-text">Створити</div>
+            <div onClick={()=>{
+                if(page===0){
+                    setAddModalVisibility(true)
+                }
+                else{
+                    dispatch(page_set(0));
+                    
+                }
+            }} className="sidebar__logo sidebar__icon">
+                <i className={`bi bi-${page ===0 ? 'file-earmark-plus' : 'house-fill'}`}></i>
+                <div className="sidebar__opened-text">{page ===0 ?'Створити' : 'Додому'}</div>
             </div>
 
             <div className="sidebar__list">

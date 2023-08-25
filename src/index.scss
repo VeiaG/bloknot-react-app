@@ -1,5 +1,6 @@
 @import './styles/mixins.scss';
 @import './styles/variables.scss';
+@import '@mdxeditor/editor/style.css';
 body {
     margin: 0;
     font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',

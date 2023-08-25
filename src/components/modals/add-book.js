@@ -10,6 +10,7 @@ import TextSettingsPage from "./pages/add-book/text-settings-page";
 import ColorSettingsPage from "./pages/add-book/color-settings-page";
 import IconSettingsPage from './pages/add-book/icon-settings-page';
 import { useDispatch , useSelector} from "react-redux";
+
 ReactModal.setAppElement('#root')
 
 
@@ -113,7 +114,6 @@ const AddBook = ({isActive , closeModal  ,isEdit =false, editId=null})=>{
             iconName:icon
         })
     }
-
     const HandlePage=(isForward )=>{
         if(isForward && page<pageCount-1){
             setPage(page+1);
