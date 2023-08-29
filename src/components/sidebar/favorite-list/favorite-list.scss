@@ -23,7 +23,7 @@
 
         transition: all 0.3s ease-in-out;
         .sidebar--open &{
-            width:184px;
+            width:192px;
         
         }
 
@@ -39,15 +39,8 @@
     }
     &__item-text{
 
-        display:none;
         font-size:18px;
         @include lineOverflow;
-        //доступ до модифікатора --open в sidebar-а , незнаю як по іншому зробити
-        .sidebar--open &{
-            display:-webkit-box;
-            animation: 0.2s ease-in textSizeIn;
-        }
-
         cursor:pointer;
         pointer-events: none;
         user-select:none;

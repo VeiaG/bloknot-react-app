@@ -5,7 +5,7 @@ import { MDXEditor } from '@mdxeditor/editor/MDXEditor'
 import { headingsPlugin } from '@mdxeditor/editor/plugins/headings'
 import { listsPlugin } from '@mdxeditor/editor/plugins/lists'
 import { quotePlugin } from '@mdxeditor/editor/plugins/quote'
-import { linkPlugin } from "@mdxeditor/editor";
+import { CodeToggle, CreateLink,  InsertImage, InsertTable, InsertThematicBreak, ListsToggle, Separator, ShowSandpackInfo, codeBlockPlugin, codeMirrorPlugin, diffSourcePlugin, directivesPlugin, imagePlugin, linkDialogPlugin, linkPlugin, sandpackPlugin, tablePlugin, thematicBreakPlugin, useCodeBlockEditorContext } from "@mdxeditor/editor";
 import { markdownShortcutPlugin } from "@mdxeditor/editor";
 
 import { UndoRedo } from '@mdxeditor/editor/plugins/toolbar/components/UndoRedo'
@@ -26,16 +26,12 @@ import debounce from "lodash.debounce";
 
 const service = new CacheService();
 
-//переробити шоб замість NoteIndex використовувався індекс в масиві
-// currentState.bookItems.items
-//Так легше буде змінювати. Оновлення робити ТІЛЬКИ в стейті компонента 
-// завантажувати лише при додаванні , бо по іншому злітає
 
 
 const BookPage = ()=>{
     const currentState = useSelector(state=> state.page.value);
     const editorRef = useRef();
-
+    
     const dispatch = useDispatch();
 
     const [NoteIndex, setNoteIndex] = useState(undefined);
@@ -44,13 +40,20 @@ const BookPage = ()=>{
 
     const curStateRef = useRef(currentState.bookItems);
 
+    useEffect(()=>{
+        if(NoteIndex !== undefined){
+            editorRef.current.setMarkdown(currentState.bookItems.items[NoteIndex].content);
+        }
+    },[NoteIndex])
+
+    curStateRef.current = currentState.bookItems;
 
     const SetNote = (id)=>{
         const noteIndex = currentState.bookItems.items.findIndex(item => item.id === id);
         setNoteIndex(noteIndex);
         NoteIndexRef.current = noteIndex;
-        curStateRef.current = currentState.bookItems;
-        editorRef.current.setMarkdown(currentState.bookItems.items[noteIndex].content);
+        
+        
     }
 
     const refresh = ()=>{
@@ -61,20 +64,22 @@ const BookPage = ()=>{
             };
             dispatch(bookItems_set(newBooksItems));
             curStateRef.current = newBooksItems;
+
+            setNoteIndex(result.length -1);
+            NoteIndexRef.current = result.length -1;
         })
     }
 
   
 
     const handleChange = (value )=>{
-        console.log('handle change')
         const newText = value;
         if(NoteIndexRef.current !== undefined){
             const newNote = { 
-                id: curStateRef.current.items[NoteIndexRef.current].id ,
+                ...curStateRef.current.items[NoteIndexRef.current] ,
                 content:newText}
             let newList = [...curStateRef.current.items ];
-
+            console.log('newNote : ',newNote);
             newList[NoteIndexRef.current] = newNote;
             
             service.notes_set( curStateRef.current.id,newList);
@@ -83,34 +88,88 @@ const BookPage = ()=>{
                 ...curStateRef.current,
                 items: newList
             }));
+            curStateRef.current = {
+                ...curStateRef.current,
+                items: newList
+            };
         }
     }
+
+    const TogglePin = (id)=>{
+        const index = currentState.bookItems.items.findIndex(item => item.id === id);
+        console.log('togle pin id: '+id);
+        const newNote = { 
+            ...curStateRef.current.items[index] ,
+            isPinned: !curStateRef.current.items[index].isPinned}
+        let newList = [...curStateRef.current.items ];
+
+        newList[index] = newNote;
+
+        service.notes_set( curStateRef.current.id,newList);
+        
+        dispatch(bookItems_set({
+            ...curStateRef.current,
+            items: newList
+        }));
+        curStateRef.current = {
+            ...curStateRef.current,
+            items: newList
+        };
+    }
+
     const debouncedHandleChange = debounce(handleChange,300);
+
     return <div className="book-page">
         <BookPageSidebar 
             data={currentState.bookItems} 
             setNote={SetNote}
-            refreshList={refresh}/>
+            refreshList={refresh}
+            togglePin={TogglePin}/>
         <div className="book-page__editor">
-            <MDXEditor 
+        {(NoteIndex !== undefined )&& <MDXEditor 
                 onChange={debouncedHandleChange}
                 ref={editorRef}
-                className="dark-theme MDEditor"
-                markdown={'' }
+                className=" MDEditor"
+                markdown={'хуй'}
+                
                 plugins={[
                     headingsPlugin(),
                     listsPlugin(),
                     linkPlugin(),
                     quotePlugin(),
                     markdownShortcutPlugin(),
+                    linkDialogPlugin(),
+                    imagePlugin(),
+                    thematicBreakPlugin(),
+                    tablePlugin(),
                     toolbarPlugin({
                         toolbarContents: () => ( <> 
                             <UndoRedo />
+                            <Separator/>
+
                             <BoldItalicUnderlineToggles />
+                            <ListsToggle/>
+                            <Separator/>
+
                             <BlockTypeSelect/>
+                            <Separator/>
+
+                            <CodeToggle/>
+                            <Separator/>
+
+                            <InsertThematicBreak/>
+                            <CreateLink/>
+                            <InsertImage/>
+                            <Separator/>
+                            
+                            <InsertTable/>
+
+
                         </>)
                     })]
                     } />
+            }
+
         </div>
     </div>
 }

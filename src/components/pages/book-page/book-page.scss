@@ -1,5 +1,6 @@
 @import '../../../styles/mixins.scss';
 .MDEditor{
+    
     --accentBase: var(--hover-color);
     --accentBgSubtle: var(--hover-color);
     --accentBg: var(--hover-color);
@@ -29,6 +30,7 @@
     --radius-medium:0px;
     [role="toolbar"] {
         font-size:32px;
+        flex-wrap:wrap;
     }
     blockquote{
         margin: 1rem 2rem;
@@ -48,21 +50,74 @@
         flex-grow:1;
         
     }
+    &__search-container{
+        width: calc(100% - 32px);
+        margin-inline: auto;
+        @include input-text; 
+    }
     //sidebar
     &__sidebar{
+        max-height:100vh;
         flex-shrink: 0;
         width:25%;
         background:var(--bg-color);
         display: flex;
         flex-direction: column;
         &-header{
+            flex-shrink: 0;
             padding:8px 16px;
-            @include lineOverflow;
+            
+            &-text{
+                @include lineOverflow;
+            }
+
             @include center-content;
+
             justify-content: space-between;
+
             font-size:32px;
+            
             border-bottom:2px solid var(--border-color);
             border-right:2px solid var(--border-color);
+        }
+        &-list-container{
+            min-height: 0;
+            flex-grow:1;
+
+            position: relative;
+            overflow-y: auto;
+
+            padding: 0px 8px;
+
+            @include custom-scrollbar(16px);
+            overflow-y: auto;
+            scrollbar-gutter: stable both-edges;
+            scroll-snap-type: y mandatory;
+        }
+        &-list{
+            display: flex;
+            flex-direction: column;
+            
+        }
+        &-item{
+            font-size:24px;
+
+            scroll-snap-align: start;
+
+            border-bottom: 2px solid var(--border-color);
+
+            @include center-content;
+            justify-content: space-between;
+
+            padding:8px 0px;
+
+
+            cursor:pointer;
+            
+            user-select:none;
+            &-text{
+                @include lineOverflow;
+            }
         }
     }
 }
