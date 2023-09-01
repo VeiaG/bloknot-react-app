@@ -1,4 +1,7 @@
 @import '../../../styles/mixins.scss';
+*{
+    transition: background 0.3s ease-in-out;
+}
 .main-page{
     flex-grow:1;
     position: relative;
@@ -48,6 +51,9 @@
         height:100%;
         aspect-ratio: 1;
         background:var(--sidebar-color);
+
+        @include hoverBgAnim;
+        
     }
     //list
     &__list-wrapper{
@@ -100,7 +106,7 @@
     &__item{
         scroll-snap-align: start;
 
-        
+        @include hoverBgAnim(background-color);
 
         background:var(--foreground-color);
 
@@ -116,6 +122,9 @@
         justify-content: flex-start;
         align-items: center;
         box-sizing: border-box;
+
+        cursor: pointer;
+        user-select:none;
 
         .main-page__list-columns &{
             min-height:128px;

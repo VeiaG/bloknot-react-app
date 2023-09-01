@@ -2,12 +2,23 @@ import React, {useState} from "react";
 import './main-page.scss';
 import MainPageHeader from "./main-page-header/main-page-header";
 import MainPageList from "./main-page-list/main-page-list";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 
-import useToggleState from '../../../hooks/useToggleState'
+import CacheService from "../../../services/CacheService";
+
+import { set_list } from "../../../reducers/settingsSlice";
+
+
+
+const service = new CacheService();
 
 const MainPage = ()=>{
     const data = useSelector(state=>state.data.value);
+
+    const dispatch = useDispatch();
+
+    const isColumns = useSelector(state=> state.settings.value.isList);
+
     const [searchValue,setSearchValue] = useState('');
     //default filter
     const [filterId, setFilter] = useState(2);
@@ -58,7 +69,6 @@ const MainPage = ()=>{
         setSearchValue(value);
     }
 
-    const [isColumns , toggleColumns] = useToggleState();
 
 
     return (
@@ -66,7 +76,12 @@ const MainPage = ()=>{
             <div className="main-page__content">
                 <MainPageHeader 
                     onSearch={onSearch} 
-                    toggleColumns={toggleColumns} 
+                    toggleColumns={()=>{
+
+                            dispatch(set_list(!isColumns));
+                            service.set_list(!isColumns);
+                        }
+                    } 
                     isColumns={isColumns}
                     onFilter={setFilter}
                     filterId={filterId}/>

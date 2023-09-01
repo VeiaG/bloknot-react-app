@@ -31,7 +31,7 @@ import AddBook from "../modals/add-book";
                 
             <div onClick={toggleOpened} className="sidebar__menu sidebar__icon">
                 <i className="bi bi-list"></i>
-                <div className="sidebar__opened-text">Блокнот</div>
+                <div className="sidebar__opened-text">Notate</div>
             </div>
 
             <div onClick={()=>{
@@ -51,7 +51,7 @@ import AddBook from "../modals/add-book";
                 <FavoriteList data={data}/>
             </div>
             
-            <div onClick={()=>{}} className="sidebar__settings sidebar__icon">
+            <div onClick={()=>{dispatch(page_set(2));}} className="sidebar__settings sidebar__icon">
                 <i className="bi bi-gear"></i>
                 <div className="sidebar__opened-text">Налаштування</div>
             </div>

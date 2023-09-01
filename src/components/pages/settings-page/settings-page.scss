@@ -1,0 +1,26 @@
+
+.settings-page{
+    flex-grow:1;
+    position: relative;
+    
+    padding:32px;
+
+    display:flex;
+    gap: 16px;
+    flex-direction: column;
+    align-items: start;
+
+    .underline{
+        width:100%;
+        height:2px;
+        background:var(--border-color);
+    }
+
+    &__label{
+        font-size:28px;
+    }
+
+    &__theme{
+        font-size:28px;
+    }
+}

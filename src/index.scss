@@ -16,6 +16,20 @@ body {
     background: var(--bg-color);
     color:var(--text-color);
   }
+  .error{
+    background:var(--danger-bg);
+    color:var(--danger-color);
+
+    width:100vw;
+    height:100vh;
+    position: absolute;
+    top:0;
+    left:0;
+
+
+    @include center-content;
+    flex-direction: column;
+}
   
 
   

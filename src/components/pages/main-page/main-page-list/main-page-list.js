@@ -12,6 +12,7 @@ import AddBook from "../../../modals/add-book";
 
 import {page_set, bookItems_set} from "../../../../reducers/pageSlice";
 import CacheService from "../../../../services/CacheService";
+import InfoModal from "../../../modals/info-modal";
 
 const service = new CacheService();
 
@@ -22,8 +23,11 @@ const MENU_ID = "MenuItemContext";
 const MainPageList = ({isColumns,data})=>{
     const [contextItem , setContextItem] = useState(false);
 
+    //modals visibility state
     const [confirmModalVisibility, setConfirmModalVisibility] = useState(false);
     const [addModalVisibility, setAddModalVisibility] = useState(false);
+    const [infoModalVisibility, setInfoModalVisibility] = useState(false);
+    const [infoObject, setInfoObject] = useState({});
 
     const dispatch = useDispatch();
 
@@ -59,7 +63,22 @@ const MainPageList = ({isColumns,data})=>{
                 setAddModalVisibility(true);
                 break;
             case 'info':
-                console.log(data.find(item => item.id === contextItem.id));
+                const {createDate,text,lastEditDate,id,description} = data.find(item => item.id === contextItem.id);
+                service.notes_get(id).then(result=>{
+                    const noteCount = result.length;
+                    const InfoObj = {
+                        createDate,
+                        lastEditDate,
+                        text,
+                        description,
+                        id,
+                        noteCount
+                    }
+                    setInfoObject(InfoObj);
+                    setInfoModalVisibility(true);
+                }
+                );
+                
             break;
             default:
                 console.log('click '+id)
@@ -69,8 +88,12 @@ const MainPageList = ({isColumns,data})=>{
       }
     return (
         <div className="main-page__list-wrapper">
-            
-             <ConfirmModal 
+            <InfoModal 
+                title='Інформація'
+                closeModal={()=>setInfoModalVisibility(false)}
+                info={infoObject}
+                isActive={infoModalVisibility}/>
+            <ConfirmModal 
                 title="Дійсно видалити ?"
                 onAnswer={onAnswer}
                 isActive={confirmModalVisibility}

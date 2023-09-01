@@ -6,24 +6,52 @@ import CacheService from "../../services/CacheService";
 import { useDispatch, useSelector } from "react-redux";
 import { books_load } from "../../reducers/dataSlice";
 import BookPage from "../pages/book-page/book-page";
+import SettingsPage from "../pages/settings-page/settings-page";
+
+import { set_language,set_list,set_theme } from "../../reducers/settingsSlice";
 
 const service = new CacheService();
 const App = ()=>{
     const page = useSelector(state=> state.page.value.page);
+
+    const theme = useSelector(state=> state.settings.value.isLightTheme);
+
+
     const dispatch = useDispatch();
     //load saved data
     useEffect(()=>{
         service.books_getAll().then(result =>{
             dispatch(books_load(result)
         );
+        service.get_settings().then(result =>{
+            const {language,list,theme} = result;
+            if( !language ){
+                service.set_language('ua');
+                service.set_list(false);
+                service.set_theme(false);
+            }
+            else{
+                dispatch(set_language(language));
+                dispatch(set_list(list));
+                dispatch(set_theme(theme))
+            }
+            
+        })
        });
     },[dispatch])
+
+    //theme update
+    useEffect(()=>{
+        document.body.classList.remove('dark');
+        document.body.classList.remove('light');
+        document.body.classList.add(`${theme? 'light': 'dark'}`);
+    },[theme])
     
     const currentPage = ()=>{
-        console.log(page);
         switch(page){
             case 0: return <MainPage/>
             case 1: return <BookPage/>
+            case 2: return <SettingsPage/>
             default: return <MainPage/>
         }
     }

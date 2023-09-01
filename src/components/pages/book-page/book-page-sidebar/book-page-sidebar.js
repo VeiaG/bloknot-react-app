@@ -17,7 +17,7 @@ const BookPageSidebar = ({data , setNote , refreshList , togglePin, deleteNote ,
     const [searchValue,setSearchValue] = useState('');
     
     console.log(data,curNote);
-    const curNoteID = data.items[curNote]=== undefined ? undefined : data.items[curNote].id;
+    const curNoteID =  data.items && (data.items[curNote]=== undefined ? undefined : data.items[curNote].id);
 
     
     

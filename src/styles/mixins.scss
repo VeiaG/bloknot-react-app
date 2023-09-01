@@ -60,8 +60,8 @@
         -webkit-box-orient: vertical;
 }
 
-@mixin hoverBgAnim($color : var(--hover-bg) ){
-    transition: all 0.3s ease-in-out;
+@mixin hoverBgAnim( $transition : all , $color : var(--hover-bg)){
+    transition: $transition 0.3s ease-in-out;
     &:hover{
         background: $color;
     }

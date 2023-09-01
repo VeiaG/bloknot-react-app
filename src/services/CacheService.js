@@ -7,6 +7,9 @@ export default class CacheService {
     notes = localforage.createInstance({
         name: 'notes'
     })
+    settings = localforage.createInstance({
+        name:'settings'
+    })
     book_set =  (key,data)=>  this.books.setItem(key,data);
 
     book_get = (key) => this.books.getItem(key);
@@ -39,5 +42,24 @@ export default class CacheService {
 
     notes_get = (key) => this.notes.getItem(key);
 
+
+    //settings 
+    set_theme= (value) => {
+        this.settings.setItem('theme',value);
+    }
+    set_list= (value) => {
+        this.settings.setItem('list',value);
+    }
+    set_language= (value) => {
+        this.settings.setItem('language',value);
+    }
+
+    get_settings = async ()=> {
+        let result = {};
+        await this.settings.iterate((value,key)=>{
+            result[key]=value;
+        })
+        return result;
+    }
 
 }

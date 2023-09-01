@@ -1,5 +1,5 @@
 .dark{
-    --text-color: #fff;
+    --text-color: #f1f1f1;
     --bg-color: #1F1F1F;
     --sidebar-color:#333;
     --foreground-color:#3E3E3E;
@@ -24,7 +24,37 @@
     --contexify-menu-radius: 0px;
     
 }
+.light{
+    --text-color: #333;
+    --bg-color: #f2f2f2;
+    --sidebar-color: #e0e0e0;
+    --foreground-color: #b5b5b5;
+    --scrollbar-color: #DDDDDD;
+    --danger-color: #FF6B6B;
+    --danger-bg: #FF1E1E;
+    --hover-color: #8c7e00;
+    --hover-bg: #DDDDDD;
+    --editor-bg: #a2a2a2;
+    --border-color: #CCCCCC;
+    --secondary-bg-color: #efefef;
+
+    --contexify-menu-bgColor: var(--sidebar-color);
+    --contexify-separator-color: var(--bg-color);
+    --contexify-item-color: var(--text-color);
+    --contexify-activeItem-color: #var(var(--text-color));
+    --contexify-activeItem-bgColor: var(--hover-bg);
+    --contexify-rightSlot-color: #6f6e77;
+    --contexify-activeRightSlot-color: #fff;
+    --contexify-arrow-color: #6f6e77;
+    --contexify-activeArrow-color: #fff;
+    --contexify-menu-radius: 0px;
+}
 //global styles
+:root{
+    
+}
+
+
 
 .color-danger{
     color: var(--danger-color);
