@@ -10,14 +10,12 @@ import { useDispatch } from "react-redux";
 import { book_remove } from "../../../../reducers/dataSlice";
 import AddBook from "../../../modals/add-book";
 
-const MENU_ID = "MenuItemContext";
-/*
-    TODO:
-    - Перенести логіку контекстного меню 
-    та попап видалення (confirm popup) 
-    в окремі HOC компоненти
-*/
+import {page_set, bookItems_set} from "../../../../reducers/pageSlice";
+import CacheService from "../../../../services/CacheService";
 
+const service = new CacheService();
+
+const MENU_ID = "MenuItemContext";
 
 
 
@@ -84,7 +82,21 @@ const MainPageList = ({isColumns,data})=>{
                 editId={contextItem.id}/> 
             <div  className={`main-page__list${isColumns ? '-columns' : ''}`}>
                 {data.map(item=>{
-                    return (<MainPageItem key={item.id} {...item} onContextMenu={displayMenu}/>)
+                    return (<MainPageItem 
+                        key={item.id} {...item} 
+                        onContextMenu={displayMenu}
+                        onClick={()=>{
+                            
+                            dispatch(page_set(1));
+                            service.notes_get(item.id).then(result =>{
+                                dispatch(bookItems_set({
+                                    id:item.id,
+                                    name: item.text,
+                                    items:result 
+                                }));
+                            })
+                            
+                        }} />)
                 })}
             </div>
             <ContextMenu id={MENU_ID} handleItemClick={handleItemClick} items={[

@@ -1,7 +1,7 @@
 import React, {useState} from "react";
 import list from '../../../icon-name-list/icon-name-list';
 import './icon-settings-page.scss';
-
+import debounce from "lodash.debounce";
 /*
     Колись звідкись взнати як зробити щоб пошук здійснювався на фоні , 
     а тільки потім показувався результат  (тому що при пошуку лагає)
@@ -27,7 +27,8 @@ const IconSettingsPage = ({iconName , onIconChange ,color})=>{
     return <div className="icon-settings">
         <div className="icon-settings__search-input">
                 <i className="bi bi-search"></i>
-                <input onChange={(e)=>{setSearch(e.target.value)}} type="text" 
+                <input onChange={debounce((e)=>{setSearch(e.target.value)},300)}
+                        type="text" 
                         placeholder="Пошук"/>
         </div>
         <div className="icon-settings__list-wrapper">

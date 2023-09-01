@@ -1,12 +1,20 @@
 import React from "react";
+
 import './favorite-list.scss'
+
 import FavoriteItem from "../favorite-item/favorite-item";
 import { useDispatch } from "react-redux";
 import {page_set, bookItems_set} from "../../../reducers/pageSlice";
+
 import CacheService from "../../../services/CacheService";
+
 const service = new CacheService();
+
 const FavoriteList =({data}) => {
+
     const dispatch = useDispatch();
+
+    //вибірка тільки улюблених книг
     const dataFavorite = data.filter(item => item.favorite).sort((a,b)=>{
         const dateA = a.favoriteDate;
         const dateB = b.favoriteDate;

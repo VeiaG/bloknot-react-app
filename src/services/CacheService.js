@@ -11,7 +11,10 @@ export default class CacheService {
 
     book_get = (key) => this.books.getItem(key);
 
-    book_remove = key => this.books.removeItem(key);
+    book_remove = key => {
+        this.books.removeItem(key)
+        this.notes.removeItem(key)
+    };
 
     books_clear = ()=> this.books.clear();
 
@@ -24,7 +27,6 @@ export default class CacheService {
     }
 
     notes_set =  (key,data)=>  {
-
         return this.notes.setItem(key,data);
     }
     notes_add =async (key,data) =>{
@@ -37,6 +39,5 @@ export default class CacheService {
 
     notes_get = (key) => this.notes.getItem(key);
 
-    notes_remove = key => this.notes.removeItem(key);
 
 }

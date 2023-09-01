@@ -1,16 +1,27 @@
 import React from "react";
 import {useDispatch} from 'react-redux';
 import {book_toggle_favorite} from '../../../../reducers/dataSlice';
-const MainPageItem = ({ onContextMenu ,color,text,description,iconName,favorite,id,disableToggle = false})=>{
+const MainPageItem = ({ onClick,onContextMenu ,color,text,description,iconName,favorite,id,disableToggle = false})=>{
+    
     const dispatch = useDispatch();
-    const toggleFavorite= ()=>{
-        if(! disableToggle) dispatch(book_toggle_favorite(id));
+
+    const toggleFavorite= (e)=>{
+        if(e) e.stopPropagation();
+        if(!disableToggle) dispatch(book_toggle_favorite(id));
     }
-    return <div onContextMenu={
-            (e)=>onContextMenu(e,{
-                        id:id,
-                        isFavorite: favorite,
-                        toggleFavorite})} className="main-page__item">
+    return <div 
+                onClick={()=>{
+                    if(!disableToggle)
+                    onClick();
+                }}
+                onContextMenu={(e)=>{
+                    if(!disableToggle) 
+                        onContextMenu(e,{
+                            id:id,
+                            isFavorite: favorite,
+                            toggleFavorite})
+                }}
+                className="main-page__item">
         
             <i className={`main-page__item-icon bi bi-${iconName}`} style={{color}}></i>
        <div className="main-page__text-wrapper">

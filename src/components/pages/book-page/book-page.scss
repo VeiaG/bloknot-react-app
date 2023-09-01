@@ -36,11 +36,31 @@
         margin: 1rem 2rem;
     }
 }
+
+@keyframes fadeIn {
+    0%{
+        opacity: 0;
+    }
+    100%{
+        opacity: 1;
+    }
+}
 .book-page{
     flex-grow:1;
     position: relative;
     
     display:flex;
+
+    &__anim{
+        background: var(--bg-color);
+        position: absolute;
+        top:0;
+        left:0;
+        width:100%;
+        height:100%;
+        z-index:3;
+        animation: 0.5s ease-in fadeIn reverse; 
+    }
     &__editor{
         overflow-y: auto;
         scrollbar-gutter: stable ;
@@ -51,18 +71,51 @@
         
     }
     &__search-container{
-        width: calc(100% - 32px);
-        margin-inline: auto;
+        padding:8px 32px;
+        height:64px;
+        flex-shrink: 0;
+        width: 100%;
         @include input-text; 
+        input{
+            background : var(--secondary-bg-color);
+        }
+        i{
+            left:32px;
+        }
+        border-bottom: 2px solid var(--border-color);
+
+        transition:all 0.3s ease-in-out;
+        .book-page__sidebar--closed &{
+            opacity:0;
+            cursor:unset;
+            input{
+                display: none;
+            }
+        }
     }
     //sidebar
     &__sidebar{
+        background: var(--secondary-bg-color);
         max-height:100vh;
         flex-shrink: 0;
         width:25%;
-        background:var(--bg-color);
         display: flex;
         flex-direction: column;
+
+        transition:all 0.3s ease-in-out;
+
+        &--closed{
+            width:64px;
+        }
+
+        &-footer{
+            padding:8px 16px;
+            @include center-content;
+            justify-content: flex-end;
+
+            font-size:32px;
+        }
+
         &-header{
             flex-shrink: 0;
             padding:8px 16px;
@@ -80,6 +133,7 @@
             border-bottom:2px solid var(--border-color);
             border-right:2px solid var(--border-color);
         }
+
         &-list-container{
             min-height: 0;
             flex-grow:1;
@@ -93,6 +147,11 @@
             overflow-y: auto;
             scrollbar-gutter: stable both-edges;
             scroll-snap-type: y mandatory;
+
+            transition:all 0.3s ease-in-out;
+            .book-page__sidebar--closed &{
+                opacity:0;
+            }
         }
         &-list{
             display: flex;
@@ -104,7 +163,16 @@
 
             scroll-snap-align: start;
 
-            border-bottom: 2px solid var(--border-color);
+            position: relative;
+            &::after{
+                content:'';
+                position: absolute;
+                width:100%;
+                height:2px;
+                bottom:0;
+                left:0;
+                background: var(--border-color);
+            }
 
             @include center-content;
             justify-content: space-between;
@@ -113,11 +181,21 @@
 
 
             cursor:pointer;
+            .book-page__sidebar--closed &{
+                cursor:unset;
+            }
+            
             
             user-select:none;
             &-text{
                 @include lineOverflow;
             }
+
+            &--selected{
+                background:var(--sidebar-color);
+            }
+
+            @include hoverBgAnim;
         }
     }
 }

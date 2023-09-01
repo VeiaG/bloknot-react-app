@@ -3,6 +3,7 @@ import { useContextMenu } from "react-contexify";
 import "react-contexify/dist/ReactContexify.css";
 import ContextMenu from "../../../context-menu/context-menu";
 import useToggleState from "../../../../hooks/useToggleState";
+import debounce from "lodash.debounce";
 const MENU_ID = "HeaderDropdown";
 
 const MainPageHeader = ({toggleColumns,onSearch , isColumns , onFilter , filterId})=>{
@@ -41,9 +42,9 @@ const MainPageHeader = ({toggleColumns,onSearch , isColumns , onFilter , filterI
 
             <div className="main-page__search-input">
                 <i className="bi bi-search"></i>
-                <input onChange={(e)=>{
+                <input onChange={debounce((e)=>{
                     onSearch(e.target.value);
-                }} type="text" name="search" id="" placeholder="Пошук" autoComplete="off"/>
+                },300)} type="text" name="search" id="" placeholder="Пошук" autoComplete="off"/>
             </div>
             
             <div onClick={toggleColumns} className="main-page__btn">
