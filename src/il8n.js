@@ -82,7 +82,7 @@ i18n.use(initReactI18next).init({
 
             favorite: "Додати в улюблене ",
             unfavorite: "Видалити з улюбленого",
-            info: "Information",
+            info: "Інформація",
             edit: "Редагувати",
 
             addBook: "Додати книгу",
