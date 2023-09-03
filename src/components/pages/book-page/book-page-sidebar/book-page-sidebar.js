@@ -9,24 +9,35 @@ import { useContextMenu } from "react-contexify";
 import ConfirmModal from "../../../modals/confirm-modal";
 import useToggleState from "../../../../hooks/useToggleState"
 
+import { useTranslation } from 'react-i18next';
 
 const MENU_ID = "NoteContextMenu";
 const service = new CacheService();
 
 const BookPageSidebar = ({data , setNote , refreshList , togglePin, deleteNote , curNote})=>{
     const [searchValue,setSearchValue] = useState('');
-    
-    console.log(data,curNote);
+
+    const [contextItem , setContextItem] = useState(false);
+    //show & hide sidebar
+    const [isOpenedSidebar, toggleOpen] = useToggleState(true);
+
+    const [confirmModalVisibility, setConfirmModalVisibility] = useState(false);
+
+    //багато умов))) ну , зате помилки точно не буде 
     const curNoteID =  data.items && (data.items[curNote]=== undefined ? undefined : data.items[curNote].id);
 
+    const {t} = useTranslation();
     
-    
+    //прикріплені записи ( відсортовані по даті прикріплення)
     const dataPinned = data.items && data.items.filter(item => item.isPinned).sort((a,b)=>{
         const dateA = a.pinDate;
         const dateB = b.pinDate;
         return dateB - dateA ;
     });
+    //не прикріплені записи
     const dataNotPinned = data.items && data.items.filter(item => !item.isPinned);
+
+    // остаточний масив з записами
     const PinSortedData = data.items && [...dataPinned, ...dataNotPinned];
 
 
@@ -36,9 +47,14 @@ const BookPageSidebar = ({data , setNote , refreshList , togglePin, deleteNote ,
         switch (id) {
             case 'pin':
                 togglePin(contextItem.id);
+                setContextItem({
+                    ...contextItem,
+                    isPinned: !contextItem.isPinned
+                })
                 break;
             case 'delete':
                 setConfirmModalVisibility(true)
+                
                 break;
             default:
                 console.log('click '+id)
@@ -47,8 +63,7 @@ const BookPageSidebar = ({data , setNote , refreshList , togglePin, deleteNote ,
         }
       }
 
-    const [contextItem , setContextItem] = useState(false);
-    const [confirmModalVisibility, setConfirmModalVisibility] = useState(false);
+    
 
     
     //Confirm Modal
@@ -58,7 +73,7 @@ const BookPageSidebar = ({data , setNote , refreshList , togglePin, deleteNote ,
             deleteNote(contextItem.id);
         }
     }
-
+    //функції для контекстного меню
     const { show } = useContextMenu({
         id: MENU_ID,
     });
@@ -70,7 +85,7 @@ const BookPageSidebar = ({data , setNote , refreshList , togglePin, deleteNote ,
         }
         
     }
-    
+    // пошук
     const search = (items,search)=>{
         if(search.length ===0){
           return items
@@ -80,9 +95,9 @@ const BookPageSidebar = ({data , setNote , refreshList , togglePin, deleteNote ,
         });
       }
 
-      const HandleSearch = (e)=>{
+    const HandleSearch = (e)=>{
         setSearchValue(e.target.value);
-      }
+    }
     
     const debouncedSearch = debounce(HandleSearch,300);
     //render list
@@ -104,7 +119,7 @@ const BookPageSidebar = ({data , setNote , refreshList , togglePin, deleteNote ,
                     })
                 }}>
                     <span className="book-page__sidebar-item-text">
-                    {removeMd(item.content.split('\n', 1)[0])  ||  'Новий запис..'}
+                    {removeMd(item.content.split('\n', 1)[0])  ||  t('newNote')}
                     </span>
                 <i 
                     onClick={(e)=>{
@@ -119,8 +134,7 @@ const BookPageSidebar = ({data , setNote , refreshList , togglePin, deleteNote ,
             </div>
     })}
 
-    //show & hide sidebar
-    const [isOpenedSidebar, toggleOpen] = useToggleState(true);
+    
 
     return <div className={`book-page__sidebar ${!isOpenedSidebar && 'book-page__sidebar--closed'  }`}>
         
@@ -145,7 +159,7 @@ const BookPageSidebar = ({data , setNote , refreshList , togglePin, deleteNote ,
         </div>
             <div className="book-page__search-container">
             <i className="bi bi-search"></i>
-                <input onChange={debouncedSearch} type="text" name="search" id="" placeholder="Пошук" autoComplete="off"/>
+                <input onChange={debouncedSearch} type="text" name="search" id="" placeholder={t('search')} autoComplete="off"/>
             </div>
        <div className="book-page__sidebar-list-container">
         <div className="book-page__sidebar-list">
@@ -158,7 +172,7 @@ const BookPageSidebar = ({data , setNote , refreshList , togglePin, deleteNote ,
             <i onClick={toggleOpen} className={`bi bi-arrow-bar-${isOpenedSidebar ? 'left': 'right'}`}></i>
        </div>
        <ConfirmModal 
-                title="Дійсно видалити ?"
+                title={t('deleteConfirm')}
                 onAnswer={onAnswer}
                 isActive={confirmModalVisibility}
                 /> 
@@ -171,7 +185,7 @@ const BookPageSidebar = ({data , setNote , refreshList , togglePin, deleteNote ,
                         id:'pin',
                         icon: <i className={`bi bi-pin${ contextItem.isPinned ? '-fill' : ''}`}/> ,
                         text: <span>
-                            {contextItem.isPinned ? 'Відкріпити' :'Прикріпити '}
+                            {contextItem.isPinned ? t('unpin') :t('pin')}
                         </span>, 
                     }
                 },
@@ -181,7 +195,7 @@ const BookPageSidebar = ({data , setNote , refreshList , togglePin, deleteNote ,
                         id:'delete',
                         icon: <i  className="bi bi-trash color-danger"></i> ,
                         text: <span className="color-danger"> 
-                             Видалити</span>, 
+                             {t('delete')}</span>, 
                         
                     }
                 }
@@ -190,3 +204,4 @@ const BookPageSidebar = ({data , setNote , refreshList , togglePin, deleteNote ,
     </div>
 }
 export default BookPageSidebar;
+

@@ -10,48 +10,23 @@ import TextSettingsPage from "./pages/add-book/text-settings-page";
 import ColorSettingsPage from "./pages/add-book/color-settings-page";
 import IconSettingsPage from './pages/add-book/icon-settings-page';
 import { useDispatch , useSelector} from "react-redux";
+import { useTranslation } from "react-i18next";
+
+import KnobGroup from "./knob-group";
 
 ReactModal.setAppElement('#root')
 
 
-
-
-const KnobGroup = ({count, value})=>{
-    let knobs=[];
-    for(let i=0 ;i<count;i++){
-        knobs.push(i===value);
-    }
-    return (
-        <div className="modal__knob-group">
-                {
-                    knobs.map((knob,index)=>{
-                        return (
-                            <div key={index} 
-                            className={`knob ${knob ? 'knob-active' :''}`}/>
-                        )
-                    })
-                }
-        </div>
-    )
-}
-
-
-// Цей компонент треба зарефакторити!!!
-
-
-
 const AddBook = ({isActive , closeModal  ,isEdit =false, editId=null})=>{
+    const pageCount = 3;
     const data = useSelector(state=>state.data.value);
 
+    const {t} = useTranslation();
     const dispatch = useDispatch()
-    const pageCount = 3;
 
     const [page,setPage] = useState(0);
-
     const [color, setColor] = useColor("#fff");
-
     const [isValid,setValid] = useState(false);
-
 
     const defaultbook = {
         id:crypto.randomUUID(),
@@ -63,14 +38,15 @@ const AddBook = ({isActive , closeModal  ,isEdit =false, editId=null})=>{
     } ;
     const [book , setBook] = useState(defaultbook)
 
+    //ініціалізація книги , тобто якщо редагуємо - завантажуємо данні в поля , 
+    //а якщо  ні - створюємо пусті данні
     useEffect(()=>{
         if(isEdit){
             const editBook = data.find(item => item.id===editId);
             if(editBook){
                 setBook({...editBook})
                 setValid(true);
-            }
-            
+            } 
         }
         else{
             setBook({
@@ -95,6 +71,8 @@ const AddBook = ({isActive , closeModal  ,isEdit =false, editId=null})=>{
         })
         setValid(e.target.value !=='');
     }
+
+    //Обробники подій для кожного параметра ( певно можна було б коротше )))
     const onDescChange = (e)=>{
         setBook({
             ...book,
@@ -114,6 +92,7 @@ const AddBook = ({isActive , closeModal  ,isEdit =false, editId=null})=>{
             iconName:icon
         })
     }
+    //переключення сторінок
     const HandlePage=(isForward )=>{
         if(isForward && page<pageCount-1){
             setPage(page+1);
@@ -126,7 +105,7 @@ const AddBook = ({isActive , closeModal  ,isEdit =false, editId=null})=>{
             closeModal();
         }
     }
-
+    // світч для переключеня сторінок
     const currentPage = ()=>{
         switch(page){
             case 0: return (<TextSettingsPage 
@@ -150,18 +129,18 @@ const AddBook = ({isActive , closeModal  ,isEdit =false, editId=null})=>{
                 onRequestClose={closeModal}
                 isOpen={isActive}>
 
-            <div className="modal__title">{isEdit ? 'Редагувати книгу' : 'Додати книгу'}</div>
+            <div className="modal__title">{isEdit ? t('editBook') : t('addBook')}</div>
             <div onClick={closeModal} className="modal__close-btn">
                 <i className="bi bi-x"></i>
             </div>
 
             <button className={`modal__next-btn button ${!isValid && page===2 ? 'button-disabled' :''}`}
                     onClick={()=>HandlePage(true)}>
-                {page===2 ? isEdit ? 'Прийняти' : 'Створити' : 'Далі'}
+                {page===2 ? isEdit ? t('confirm') : t('create') : t('next')}
             </button>
             <button 
                     className={`modal__back-btn button button-secondary ${(page===0)? 'button-disabled' :''}`}
-                    onClick={()=>HandlePage(false)}>Назад</button>
+                    onClick={()=>HandlePage(false)}>{t('back')}</button>
             
             <div className="modal__container">
                 <div className="modal__page">
@@ -170,10 +149,12 @@ const AddBook = ({isActive , closeModal  ,isEdit =false, editId=null})=>{
                     }
                 </div>
                 <MainPageItem disableToggle={true} {...book} 
-                            text={book.text===''?'Назва': book.text}
-                            description={book.description===''? 'Опис': book.description}/>
+                            text={book.text===''? t('name'): book.text}
+                            description={book.description===''? t('desc'): book.description}/>
             </div>
             <KnobGroup count={pageCount} value={page}/>
         </ReactModal>)
 }
 export default AddBook;
+
+//це якийсь самий загружений компонент 

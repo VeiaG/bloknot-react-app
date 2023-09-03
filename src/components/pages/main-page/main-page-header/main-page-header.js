@@ -4,10 +4,12 @@ import "react-contexify/dist/ReactContexify.css";
 import ContextMenu from "../../../context-menu/context-menu";
 import useToggleState from "../../../../hooks/useToggleState";
 import debounce from "lodash.debounce";
+import { useTranslation } from "react-i18next";
 const MENU_ID = "HeaderDropdown";
 
 const MainPageHeader = ({toggleColumns,onSearch , isColumns , onFilter , filterId})=>{
 
+    const {t} = useTranslation()
 
     const { show , hideAll } = useContextMenu({
         id: MENU_ID,
@@ -31,11 +33,11 @@ const MainPageHeader = ({toggleColumns,onSearch , isColumns , onFilter , filterI
         }
         toggleContextMenu();
     }
+
     //ContextMenu handler 
     function handleItemClick({ data}) {
-        console.log(data);
         onFilter(data ? data: 0);
-      }
+    }
     
     return (
         <div className="main-page__header">
@@ -44,7 +46,7 @@ const MainPageHeader = ({toggleColumns,onSearch , isColumns , onFilter , filterI
                 <i className="bi bi-search"></i>
                 <input onChange={debounce((e)=>{
                     onSearch(e.target.value);
-                },300)} type="text" name="search" id="" placeholder="Пошук" autoComplete="off"/>
+                },300)} type="text" name="search" id="" placeholder={t('search')} autoComplete="off"/>
             </div>
             
             <div onClick={toggleColumns} className="main-page__btn">
@@ -65,7 +67,7 @@ const MainPageHeader = ({toggleColumns,onSearch , isColumns , onFilter , filterI
                         disabled:true,
                         id:'label1',
                         text: <span>
-                            За алфавітом
+                            {t('byAlph')}
                         </span>, 
                     }
                 },
@@ -77,7 +79,7 @@ const MainPageHeader = ({toggleColumns,onSearch , isColumns , onFilter , filterI
                         id:'alhphabet',
                         icon: <i className={`bi bi-sort-alpha-down`}/> ,
                         text: <span>
-                            {(filterId ===0 )? 'Від Я до А': 'Від А до Я'}
+                            {(filterId ===0 )? t('za'): t('az')}
                         </span>, 
                     }
                 },
@@ -89,7 +91,7 @@ const MainPageHeader = ({toggleColumns,onSearch , isColumns , onFilter , filterI
                         disabled:true,
                         id:'label2',
                         text: <span>
-                            За датою
+                            {t('byDate')}
                         </span>, 
                     }
                 },
@@ -101,7 +103,7 @@ const MainPageHeader = ({toggleColumns,onSearch , isColumns , onFilter , filterI
                         id:'date',
                         icon: <i className={`bi bi-sort-down`}/> ,
                         text: <span>
-                            {(filterId ===2 )? 'Від нового': 'Від старого'}
+                            {(filterId ===2 )? t('dNew'): t('dOld')}
                         </span>, 
                     }
                 }

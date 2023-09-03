@@ -39,6 +39,14 @@ export default class CacheService {
             this.notes.setItem(key,newList);
         })
     }
+    notes_getAll = async ()=> {
+        const result = [];
+        await this.notes.iterate((value,key)=>{
+            result.push({id:key, notes:value});
+        })
+        return result;
+    }
+      
 
     notes_get = (key) => this.notes.getItem(key);
 

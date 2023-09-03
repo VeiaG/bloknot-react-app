@@ -9,6 +9,7 @@ import pageReducer from "./reducers/pageSlice";
 import settingsReducer from "./reducers/settingsSlice";
 import { ErrorBoundary } from "react-error-boundary";
 
+import i18next from  "./il8n";
 
 //Redux store
 const store = configureStore({
@@ -22,9 +23,10 @@ const store = configureStore({
 
 const Error = ({error})=>{
 
+
   return <div className="error">
-      <h1>Виникла помилка...</h1>
-      <h3>Спробуйте перезавантажити сторінку</h3>
+      <h1>{i18next.t("error")}</h1>
+      <h3>{i18next.t("errorDesc")}</h3>
       <h4>{error.message}</h4>
   </div>
 }
@@ -35,9 +37,11 @@ root.render(
     <ErrorBoundary
         fallbackRender={Error}
         >
-      <Provider store={store}>
-        <App />
-      </Provider>
+        <Provider store={store}>
+          <App />
+        </Provider>      
+
+      
     </ErrorBoundary >
   </React.StrictMode>
 );

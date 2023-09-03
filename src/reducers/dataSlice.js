@@ -18,7 +18,6 @@ export const dataSlice = createSlice({
           ...action.payload, 
           createDate: Date.now(),
           lastEditDate: Date.now(),
-          favoriteDate : Date.now(),
         }
         state.value.push(newBook);
 

@@ -9,6 +9,7 @@ const MainPageItem = ({ onClick,onContextMenu ,color,text,description,iconName,f
         if(e) e.stopPropagation();
         if(!disableToggle) dispatch(book_toggle_favorite(id));
     }
+    
     return <div 
                 onClick={()=>{
                     if(!disableToggle)

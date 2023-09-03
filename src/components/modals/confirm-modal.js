@@ -2,11 +2,13 @@ import React from "react";
 import ReactModal from "react-modal";
 
 import './modal.scss';
+import { useTranslation } from "react-i18next";
 
 ReactModal.setAppElement('#root')
 
 const ConfirmModal = ({title , onAnswer , isActive})=>{
     
+    const {t} = useTranslation();
 
     return (<ReactModal overlayClassName="modal modal--confirm"
                 className="modal__content"
@@ -18,9 +20,9 @@ const ConfirmModal = ({title , onAnswer , isActive})=>{
             <div className="modal__button-group">
                 <button 
                         className={`button button-secondary`}
-                        onClick={()=>onAnswer(false)}>Відміна</button>
+                        onClick={()=>onAnswer(false)}>{t('cancel')}</button>
                 <button className={`button button--danger `}
-                        onClick={()=>onAnswer(true)}>Видалити</button>
+                        onClick={()=>onAnswer(true)}>{t('delete')}</button>
             </div>
 
             

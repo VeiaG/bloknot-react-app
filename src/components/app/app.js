@@ -8,16 +8,18 @@ import { books_load } from "../../reducers/dataSlice";
 import BookPage from "../pages/book-page/book-page";
 import SettingsPage from "../pages/settings-page/settings-page";
 
+import i18n from "../../il8n";
+
 import { set_language,set_list,set_theme } from "../../reducers/settingsSlice";
 
 const service = new CacheService();
 const App = ()=>{
     const page = useSelector(state=> state.page.value.page);
 
-    const theme = useSelector(state=> state.settings.value.isLightTheme);
-
+    const {isLightTheme,language} = useSelector(state=> state.settings.value);
 
     const dispatch = useDispatch();
+    
     //load saved data
     useEffect(()=>{
         service.books_getAll().then(result =>{
@@ -44,8 +46,13 @@ const App = ()=>{
     useEffect(()=>{
         document.body.classList.remove('dark');
         document.body.classList.remove('light');
-        document.body.classList.add(`${theme? 'light': 'dark'}`);
-    },[theme])
+        document.body.classList.add(`${isLightTheme? 'light': 'dark'}`);
+    },[isLightTheme])
+    
+    //lang update
+    useEffect(()=>{
+       i18n.changeLanguage(language);
+    },[language])
     
     const currentPage = ()=>{
         switch(page){

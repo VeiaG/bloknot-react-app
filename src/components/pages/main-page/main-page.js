@@ -8,8 +8,6 @@ import CacheService from "../../../services/CacheService";
 
 import { set_list } from "../../../reducers/settingsSlice";
 
-
-
 const service = new CacheService();
 
 const MainPage = ()=>{
@@ -32,6 +30,7 @@ const MainPage = ()=>{
                 || item.description.toLowerCase().includes(search.toLowerCase())
         });
       }
+    // усі фільтри
     const filter = (items)=>{
         switch(filterId){
             //від А до Я

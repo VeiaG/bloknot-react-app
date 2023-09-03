@@ -21,7 +21,7 @@ const ContextMenu = ({className,id , items , handleItemClick , MenuReference = u
                                     
                                 </Item>
                             )
-                        //Додати підтримку submenu
+                        
                         default:
                             return( <Separator key={item.type}/>)
                         

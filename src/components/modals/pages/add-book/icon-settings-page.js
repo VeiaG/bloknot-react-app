@@ -2,6 +2,7 @@ import React, {useState} from "react";
 import list from '../../../icon-name-list/icon-name-list';
 import './icon-settings-page.scss';
 import debounce from "lodash.debounce";
+import { useTranslation } from "react-i18next";
 /*
     Колись звідкись взнати як зробити щоб пошук здійснювався на фоні , 
     а тільки потім показувався результат  (тому що при пошуку лагає)
@@ -12,6 +13,8 @@ import debounce from "lodash.debounce";
 */
 const IconSettingsPage = ({iconName , onIconChange ,color})=>{
     const [searchValue,setSearch]= useState('');
+
+    const {t} = useTranslation();
 
     const search = (items,search)=>{
         if(search.length ===0){
@@ -29,7 +32,7 @@ const IconSettingsPage = ({iconName , onIconChange ,color})=>{
                 <i className="bi bi-search"></i>
                 <input onChange={debounce((e)=>{setSearch(e.target.value)},300)}
                         type="text" 
-                        placeholder="Пошук"/>
+                        placeholder={t('search')}/>
         </div>
         <div className="icon-settings__list-wrapper">
             <div className="icon-settings__list">

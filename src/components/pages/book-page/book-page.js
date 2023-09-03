@@ -33,6 +33,7 @@ const BookPage = ()=>{
     const editorRef = useRef();
     
     const dispatch = useDispatch();
+    
     //states
     const [NoteIndex, setNoteIndex] = useState(undefined);
     const [isAnimation, setAnimation] = useState(true);
@@ -80,6 +81,7 @@ const BookPage = ()=>{
         
     }
 
+    //оновлення списку записів
     const refresh = ()=>{
         service.notes_get(currentState.bookItems.id).then(result =>{
             const newBooksItems = {
@@ -94,10 +96,11 @@ const BookPage = ()=>{
         })
     }
 
-
     const getIndex = (id)=>{
         return currentState.bookItems.items.findIndex(item => item.id === id);
     }
+
+    // оновлення змін в redux-стейті та в кеш (localforage);
     const pushResults = (newList)=>{
         dispatch(bookItems_set({
             ...curStateRef.current,
@@ -108,6 +111,7 @@ const BookPage = ()=>{
             items: newList
         };
     }
+    // обробник подій при набиранні тексту в редакторі
     const handleChange = (value )=>{
         const newText = value;
         if(NoteIndexRef.current !== undefined){
@@ -115,7 +119,6 @@ const BookPage = ()=>{
                 ...curStateRef.current.items[NoteIndexRef.current] ,
                 content:newText}
             let newList = [...curStateRef.current.items ];
-            console.log('newNote : ',newNote);
             newList[NoteIndexRef.current] = newNote;
             
             service.notes_set( curStateRef.current.id,newList);
@@ -123,7 +126,7 @@ const BookPage = ()=>{
             pushResults(newList);
         }
     }
-   
+    // Прикріплення запису
     const TogglePin = (id)=>{
         const index = getIndex(id);
 
@@ -140,6 +143,7 @@ const BookPage = ()=>{
         
         pushResults(newList);
     }
+    //видалення запису
     const deleteNote = (id)=>{
         const index = getIndex(id);
 
@@ -154,11 +158,10 @@ const BookPage = ()=>{
         
         pushResults(newList);
     }
+
     const debouncedHandleChange = debounce(handleChange,300);
 
 
-
-    
     return <div className="book-page">
         {isAnimation && <div className="book-page__anim"/>}
         <BookPageSidebar 

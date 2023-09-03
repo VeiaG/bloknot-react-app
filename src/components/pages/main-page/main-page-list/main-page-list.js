@@ -13,6 +13,7 @@ import AddBook from "../../../modals/add-book";
 import {page_set, bookItems_set} from "../../../../reducers/pageSlice";
 import CacheService from "../../../../services/CacheService";
 import InfoModal from "../../../modals/info-modal";
+import { useTranslation } from "react-i18next";
 
 const service = new CacheService();
 
@@ -22,6 +23,7 @@ const MENU_ID = "MenuItemContext";
 
 const MainPageList = ({isColumns,data})=>{
     const [contextItem , setContextItem] = useState(false);
+    const {t} = useTranslation();
 
     //modals visibility state
     const [confirmModalVisibility, setConfirmModalVisibility] = useState(false);
@@ -46,7 +48,6 @@ const MainPageList = ({isColumns,data})=>{
             dispatch(book_remove(contextItem.id));
         }
     }
-
 
     //ContextMenu handler 
     function handleItemClick({ id}) {
@@ -89,12 +90,11 @@ const MainPageList = ({isColumns,data})=>{
     return (
         <div className="main-page__list-wrapper">
             <InfoModal 
-                title='Інформація'
                 closeModal={()=>setInfoModalVisibility(false)}
                 info={infoObject}
                 isActive={infoModalVisibility}/>
             <ConfirmModal 
-                title="Дійсно видалити ?"
+                title={t('deleteConfirm')}
                 onAnswer={onAnswer}
                 isActive={confirmModalVisibility}
                 /> 
@@ -123,7 +123,7 @@ const MainPageList = ({isColumns,data})=>{
                 })}
             </div>
             <ContextMenu id={MENU_ID} handleItemClick={handleItemClick} items={[
-                //Обьект з усіма елементами контекстного меню
+                //Обьект з усіма елементами контекстного меню (для динамічного генерування)
                 {
                     type:'ITEM',
                     closeOnClick:false,
@@ -131,7 +131,7 @@ const MainPageList = ({isColumns,data})=>{
                         id:'favorite',
                         icon: <i className={`bi bi-star${contextItem.isFavorite? '-fill' : ''}`}/> ,
                         text: <span>
-                            {contextItem.isFavorite ? 'Видалити з улюбленого' :'Додати в улюблене '}
+                            {contextItem.isFavorite ? t('unfavorite') :t('favorite')}
                         </span>, 
                     }
                 },
@@ -141,7 +141,7 @@ const MainPageList = ({isColumns,data})=>{
                         id:'edit',
                         icon: <i className="bi bi-pencil"/> ,
                         text: <span>
-                            Редагувати
+                            {t('edit')}
                         </span>, 
                     }
                 },
@@ -150,7 +150,7 @@ const MainPageList = ({isColumns,data})=>{
                     data: {
                         id:'info',
                         icon: <i className="bi bi-info-circle"></i> , 
-                        text: <span > Інформація</span>,
+                        text: <span > {t('info')}</span>,
                     }
                 },
                 {type:'sep1'},
@@ -160,7 +160,7 @@ const MainPageList = ({isColumns,data})=>{
                         id:'delete',
                         icon: <i  className="bi bi-trash color-danger"></i> ,
                         text: <span className="color-danger"> 
-                             Видалити</span>, 
+                             {t('delete')}</span>, 
                         
                     }
                 }
