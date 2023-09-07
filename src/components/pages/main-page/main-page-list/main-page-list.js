@@ -66,7 +66,8 @@ const MainPageList = ({isColumns,data})=>{
             case 'info':
                 const {createDate,text,lastEditDate,id,description} = data.find(item => item.id === contextItem.id);
                 service.notes_get(id).then(result=>{
-                    const noteCount = result.length;
+                    const noteCount = result ? result.length : '0';
+
                     const InfoObj = {
                         createDate,
                         lastEditDate,
