@@ -34,6 +34,9 @@
             gap:16px;
         }
         font-size: 24px;
+        @media (max-width: 735px) {
+            font-size: 16px;
+        }
     }
 
     &__search-input{
@@ -148,7 +151,9 @@
             padding:32px;
             flex-direction: row;
             gap:32px;
-            
+            @media (max-width: 735px) {
+                gap:16px;
+            }
         }
     }
     &__item-icon{
@@ -159,6 +164,9 @@
         .main-page__list-columns &{
             position: relative;
             top:0;
+            @media (max-width: 735px) {
+                font-size: 32px;
+            }
         }
     }
     &__item-title{

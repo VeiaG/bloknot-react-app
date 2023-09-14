@@ -28,13 +28,13 @@
         height:80%;
         @media (max-width: 1060px) {
             width:95%;
-            height:95%;
+            height:80%;
             .main-page__item{
                 display: none;
             }
         }
-        @media (height <= 750px){
-            height:95%;
+        @media (max-height : 750px){
+            height:80%;
             .main-page__item{
                 height:300px;
                 padding:160px 16px 0px;
@@ -45,7 +45,10 @@
         }
         //confirm modal size
         .modal--confirm &{
-            width:512px;
+            width:512px; 
+            @media (max-height : 750px){
+                width:100%; 
+            }
             height:224px;
         }
         
@@ -64,7 +67,9 @@
         gap:32px;
 
         padding: 96px 48px;
-        
+        @media (max-width: 1060px) {
+            padding: 128px 48px;
+        }
 
         width:100%;
         height:100%;
@@ -76,7 +81,9 @@
         font-size:32px;
         position: relative;
         height:100%;
-
+        @media (max-width: 1060px) {
+            font-size: 24px;
+        }
         @include center-content;
         flex-direction: column;
     }
@@ -96,6 +103,9 @@
         font-size:48px; 
         position:absolute;
         top: 16px;
+        @media (max-width: 1060px) {
+            font-size: 32px;
+        }
     }
     &__text{
         font-size:32px; 
@@ -119,6 +129,7 @@
         display: flex;
         justify-content: space-between;
         padding-inline:32px;
+        
     }
 }
 .knob{
@@ -188,7 +199,10 @@
 
     min-width: 160px;
     height:64px;
-
+    @media (max-width: 1060px) {
+        font-size: 32px;
+        min-width: 10%;
+    }
     &:hover{
         background: var(--sidebar-color);
     }
@@ -242,6 +256,9 @@
     &__text{
         font-size:24px;
         @include lineOverflow;
+        @media (max-width: 735px) {
+            @include lineOverflow(5);
+        }
     }
     &__desc{
         @include lineOverflow(8);
