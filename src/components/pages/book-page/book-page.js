@@ -23,6 +23,8 @@ import {bookItems_set} from '../../../reducers/pageSlice'
 import CacheService from "../../../services/CacheService";
 
 import debounce from "lodash.debounce";
+import { useTransition } from "react";
+import { useTranslation } from "react-i18next";
 
 const service = new CacheService();
 
@@ -31,6 +33,8 @@ const service = new CacheService();
 const BookPage = ()=>{
     const currentState = useSelector(state=> state.page.value);
     const editorRef = useRef();
+
+    const {t} = useTranslation();
     
     const dispatch = useDispatch();
     
@@ -162,7 +166,7 @@ const BookPage = ()=>{
     const debouncedHandleChange = debounce(handleChange,300);
 
 
-    return <div className="book-page">
+    return <div className={`book-page ${NoteIndex !== undefined  ? "book-page--opened"  : ''}`}>
         {isAnimation && <div className="book-page__anim"/>}
         <BookPageSidebar 
             data={currentState.bookItems} 
@@ -172,7 +176,16 @@ const BookPage = ()=>{
             deleteNote={deleteNote}
             curNote={NoteIndex}/>
         <div className="book-page__editor">
-        {(NoteIndex !== undefined )&& <MDXEditor 
+            <div className="book-page__editor-header">
+                <div onClick={(e)=> {
+                    e.stopPropagation();
+                    SetNote(undefined);
+                }}
+                className="book-page__editor-back">
+                    {t('back')}
+                </div>
+            </div>
+            {(NoteIndex !== undefined )&& <MDXEditor 
                 onChange={debouncedHandleChange}
                 ref={editorRef}
                 className=" MDEditor"

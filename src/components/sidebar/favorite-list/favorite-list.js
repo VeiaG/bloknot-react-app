@@ -10,7 +10,7 @@ import CacheService from "../../../services/CacheService";
 
 const service = new CacheService();
 
-const FavoriteList =({data}) => {
+const FavoriteList =({data , closeOnMobile}) => {
 
     const dispatch = useDispatch();
 
@@ -34,7 +34,7 @@ const FavoriteList =({data}) => {
                                     items:result 
                                 }));
                             })
-                            
+                            closeOnMobile();
                         }} 
                         key={item.id} 
                         {...item}/>)

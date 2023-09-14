@@ -121,6 +121,7 @@ const BookPageSidebar = ({data , setNote , refreshList , togglePin, deleteNote ,
                     <span className="book-page__sidebar-item-text">
                     {removeMd(item.content.split('\n', 1)[0])  ||  t('newNote')}
                     </span>
+                <div className="book-page__sidebar-item-icons"> 
                 <i 
                     onClick={(e)=>{
                         e.stopPropagation();
@@ -130,7 +131,16 @@ const BookPageSidebar = ({data , setNote , refreshList , togglePin, deleteNote ,
                         
                     }}
                     className={`bi bi-pin${item.isPinned ? '-fill' :''}`}></i>
-                
+                <i
+                    onClick={(e)=> {
+                        e.stopPropagation();
+                        displayMenu(e,{
+                            id:item.id,
+                            isPinned: item.isPinned
+                        })
+                    }}
+                    className="book-page__sidebar-item-menu bi bi-three-dots"></i>
+                </div>
             </div>
     })}
 

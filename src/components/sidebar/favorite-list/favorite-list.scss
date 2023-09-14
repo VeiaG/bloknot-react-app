@@ -24,7 +24,9 @@
         transition: all 0.3s ease-in-out;
         .sidebar--open &{
             width:192px;
-        
+            @media (max-width: 735px) {
+                width:100%;
+            }
         }
 
         display:flex;

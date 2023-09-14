@@ -1,6 +1,7 @@
 import React from "react";
 import {useDispatch} from 'react-redux';
 import {book_toggle_favorite} from '../../../../reducers/dataSlice';
+import { contextMenu } from "react-contexify";
 const MainPageItem = ({ onClick,onContextMenu ,color,text,description,iconName,favorite,id,disableToggle = false})=>{
     
     const dispatch = useDispatch();
@@ -35,6 +36,16 @@ const MainPageItem = ({ onClick,onContextMenu ,color,text,description,iconName,f
        </div>
         <div onClick={toggleFavorite} className="main-page__item-favorite-btn">
             <i className={`bi bi-star${favorite ? '-fill':''}`}></i>
+        </div>
+        <div onClick={(e)=> {
+                e.stopPropagation();
+                onContextMenu(e,{
+                    id:id,
+                    isFavorite: favorite,
+                    toggleFavorite})
+            }}
+            className="main-page__item-menu-btn">
+            <i className="bi bi-three-dots"></i>
         </div>
     </div>
 }

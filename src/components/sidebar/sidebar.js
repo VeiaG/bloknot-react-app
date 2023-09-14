@@ -23,16 +23,26 @@ import useToggleState from "../../hooks/useToggleState";
     const page = useSelector(state=> state.page.value.page);
 
     const data = useSelector(state=>state.data.value);
-
+    const closeOnMobile = ()=>{
+        const mq = window.matchMedia("(max-width: 735px)");
+        if(mq.matches){
+            if(isOpened){
+                toggleOpened();
+            }
+        }
+    }
     //handlers
     const btnClickHandler =()=>{
+       
         if(page===0){
             setAddModalVisibility(true)
+            
         }
         else{
             dispatch(page_set(0));
             
         }
+        closeOnMobile();
     }
 
     return (
@@ -54,10 +64,10 @@ import useToggleState from "../../hooks/useToggleState";
             </div>
 
             <div className="sidebar__list">
-                <FavoriteList data={data}/>
+                <FavoriteList data={data} closeOnMobile={()=> closeOnMobile()}/>
             </div>
             
-            <div onClick={()=>{dispatch(page_set(2));}} 
+            <div onClick={()=>{dispatch(page_set(2));closeOnMobile();}} 
             className="sidebar__settings sidebar__icon">
                 <i className="bi bi-gear"></i>
                 <div className="sidebar__opened-text">{t('settings')}</div>

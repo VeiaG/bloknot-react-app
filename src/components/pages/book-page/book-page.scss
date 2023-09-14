@@ -59,8 +59,38 @@
         scrollbar-gutter: stable ;
         @include custom-scrollbar(16px);
         background : var(--editor-bg);
-        
+
+        &-header{
+            display: none;
+        }
+
+        &-back{
+            cursor:pointer;
+            user-select: none;
+        }
+
+
         flex-grow:1;
+
+
+        @media (max-width: 735px) {
+            scrollbar-gutter: unset ;
+            width:100%;
+            .book-page--opened &{
+                display: block;
+            }
+            &-header{
+                
+                display: flex;
+                justify-content: flex-end;
+                align-items: center;
+                width:100%;
+                font-size:24px;
+                padding:20px;
+                background: var(--secondary-bg-color);
+               
+            }
+        }
         
     }
     &__search-container{
@@ -79,10 +109,13 @@
 
         transition:all 0.3s ease-in-out;
         .book-page__sidebar--closed &{
-            opacity:0;
-            cursor:unset;
-            input{
-                display: none;
+
+            @media (min-width: 735px) {
+                opacity:0;
+                cursor:unset;
+                input{
+                    display: none;
+                }
             }
         }
     }
@@ -91,28 +124,46 @@
         background: var(--secondary-bg-color);
         max-height:100vh;
         flex-shrink: 0;
+
         width:25%;
+        @media (max-width: 1000px) {
+            width:50%;
+            
+        }
+
         display: flex;
         flex-direction: column;
-
+        @media (max-width: 735px) {
+            width:100%;
+            .book-page--opened &{
+                display: none;
+            }
+        }
         transition:all 0.3s ease-in-out;
 
         &--closed{
-            width:64px;
+            
+            @media (min-width: 735px) {
+                width:64px;
+            }
         }
 
         &-footer{
             padding:8px 16px;
             @include center-content;
             justify-content: flex-end;
-
+            @media (max-width: 735px) {
+                display: none;
+            }
             font-size:32px;
         }
-
+        
         &-header{
             flex-shrink: 0;
             padding:8px 16px;
-            
+            @media (max-width: 735px) {
+                padding:16px 16px 8px 64px;
+            }
             &-text{
                 @include lineOverflow;
             }
@@ -143,7 +194,10 @@
 
             transition:all 0.3s ease-in-out;
             .book-page__sidebar--closed &{
-                opacity:0;
+               
+                @media (min-width: 735px) {
+                    opacity:0;
+                }
             }
         }
         &-list{
@@ -175,7 +229,10 @@
 
             cursor:pointer;
             .book-page__sidebar--closed &{
-                cursor:unset;
+                @media (min-width: 735px) {
+                    cursor:unset;
+                }
+                
             }
             
             
@@ -189,6 +246,18 @@
             }
 
             @include hoverBgAnim;
+
+            &-icons{
+                display: flex;
+                gap:8px;
+            }
+            &-menu{
+                display:none;
+                @media (max-width: 1000px) {
+                    display:block;
+                    
+                }
+            }
         }
     }
 }

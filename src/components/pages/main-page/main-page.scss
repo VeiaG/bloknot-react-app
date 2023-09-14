@@ -29,6 +29,10 @@
         width:100%;
         gap:32px;
         padding-right:16px;
+        @media (max-width: 735px) {
+            padding-left:32px;
+            gap:16px;
+        }
         font-size: 24px;
     }
 
@@ -64,6 +68,10 @@
         width: 100%;
         height:100%;
 
+        @media (max-width: 735px) {
+            padding:0px 32px;
+        }
+
         scroll-snap-type: y mandatory;
         overflow-y: auto;
         scrollbar-gutter: stable ;
@@ -87,6 +95,9 @@
         justify-content: center;
         gap:32px;
         transition: all 0.3s ease-in-out;
+        @media (max-width: 735px) {
+            grid-template-columns: 1fr;
+        }
         @media (min-width: 735px) {
             grid-template-columns: repeat(2, 1fr);
         }
@@ -107,13 +118,17 @@
         scroll-snap-align: start;
 
         @include hoverBgAnim(background-color);
-
+        
         background:var(--foreground-color);
 
         position: relative;
 
         min-width: 250px;
         max-width: 400px;
+        @media (max-width: 735px) {
+            max-width: none;
+        }
+        
         height: 400px;
         padding:256px 16px 0px;
 
@@ -168,6 +183,16 @@
     &__item-favorite-btn{
         position:absolute;
         top:12px;
+        right:12px;
+        font-size:24px;
+    }
+    &__item-menu-btn{
+        display: none;
+        @media (max-width:1000px){
+            display:block;
+        }
+        position:absolute;
+        top:48px;
         right:12px;
         font-size:24px;
     }
